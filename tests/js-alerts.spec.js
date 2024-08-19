@@ -1,5 +1,5 @@
 // filename: js-alerts.spec.js
-// This test is copied from the below link and used to insure Selenium is working
+// This test is copied from the below link and used to insure Selenium and Mocha are working as expected
 // https://elementalselenium.com/tips/51-javascript-alerts
 const assert = require("assert");
 const { Builder, By, Key } = require("selenium-webdriver");
