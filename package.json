@@ -2,5 +2,8 @@
   "dependencies": {
     "mocha": "^10.7.3",
     "selenium-webdriver": "^4.23.0"
+  },
+  "scripts": {
+    "test": "mocha --timeout 10000"
   }
 }
