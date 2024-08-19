@@ -3,7 +3,7 @@
 const assert = require("assert");
 const { Builder, By, Key } = require("selenium-webdriver");
 
-describe("JS Alerts", function() {
+describe("Adding and Removing Elements", function() {
   let driver;
 
   beforeEach(async function() {
