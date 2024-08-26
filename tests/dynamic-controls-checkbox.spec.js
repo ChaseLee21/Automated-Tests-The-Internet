@@ -3,7 +3,7 @@
 const assert = require("assert");
 const { Builder, By, Key } = require("selenium-webdriver");
 
-describe("Dynamic Controls", function() {
+describe("Dynamic Controls Checkbox", function() {
     let driver;
 
     this.beforeAll(async function() {
@@ -42,4 +42,21 @@ describe("Dynamic Controls", function() {
             message: 'no such element: Unable to locate element: {"method":"css selector","selector":"#checkbox-example #checkbox input"}\n' + '  (Session info: chrome=128.0.6613.84)'
           })
     });
+
+    it("should click the add button", async function() {
+        const checkboxForm = await driver.findElement(By.css("#checkbox-example"))
+        const addButton = await checkboxForm.findElement(By.css("button"))
+        const actions = await driver.actions({async: true})
+        await actions.click(addButton).perform()
+        await actions.pause(2000).perform()
+    });
+
+    it("should click the checkbox and confirm it is checked", async function() {
+        const checkboxForm = await driver.findElement(By.css("#checkbox-example"))
+        const checkbox = await checkboxForm.findElement(By.css("#checkbox"))
+        const actions = await driver.actions({async: true})
+        await actions.click(checkbox).perform()
+        assert.equal(await checkbox.getAttribute('checked'), 'true')
+    });
+
 });
