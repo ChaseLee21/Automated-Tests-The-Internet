@@ -28,10 +28,6 @@ describe("Dynamic Controls Text", function() {
         const actions = await driver.actions({async: true})
         await actions.click(enableButton).perform()
         await actions.pause(2000).perform()
-
-        const textInput = await textInputForm.findElement(By.css("input"))
-        const textInputDisabled = await textInput.getAttribute('disabled')
-        assert.equal(textInputDisabled, null)
     });
 
     it("should confirm the input is enabled", async function() {
