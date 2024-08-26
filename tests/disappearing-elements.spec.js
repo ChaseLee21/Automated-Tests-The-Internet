@@ -3,8 +3,8 @@
 const assert = require("assert");
 const { Builder, By, Key } = require("selenium-webdriver");
 
-describe("Checkboxes", function() {
-    let driver, listItems, itemText;
+describe("Disappearing Elements", function() {
+    let driver, expectedItems, foundItems;
     let gallery = false
 
     this.beforeAll(async function() {
@@ -16,18 +16,22 @@ describe("Checkboxes", function() {
     });
 
     it("should refresh the page until the gallery nav link appears", async function() {
-        while (!gallery) {
-            await driver.get('https://the-internet.herokuapp.com/disappearing_elements')
-            listItems = await driver.findElements(By.css('#content li'))
-            assert.ok(listItems)
-            for (let item of listItems) {
-                itemText = await item.getText()
-                assert.ok(itemText)
-                if (itemText === 'Gallery') {
-                    gallery = true
-                    assert.equal(itemText, 'Gallery')
-                }
-            }
+        await driver.get('https://the-internet.herokuapp.com/disappearing_elements')
+        expectedItems = ['Home', 'About', 'Contact Us', 'Portfolio', 'Gallery']
+
+        for (let i = 0; i < 5; i++) {
+        const elements = await driver.findElements(By.css("ul li a"));
+        foundItems = await Promise.all(elements.map(async (element) => await element.getText()));
+
+        if (expectedItems.every(el => foundItems.includes(el))) {
+            break;
         }
+
+        // Refresh the page to try again
+        await driver.navigate().refresh();
+        }
+
+        console.log("Found elements:", foundItems);
+        assert(expectedItems.every(el => foundItems.includes(el)), "Not all expected elements were found");
     });
 });
